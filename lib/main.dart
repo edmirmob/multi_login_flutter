@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:multi_login_flutter/app/sign_in/sign_in_page.dart';
+import 'package:multi_login_flutter/app/landing_page.dart';
+import 'package:multi_login_flutter/services/auth.dart';
 
 void main() async{
    WidgetsFlutterBinding.ensureInitialized();
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
        
         primarySwatch: Colors.indigo,
       ),
-      home: SignInPage(title: 'Login Page'),
+      home: LandingPage(auth: Auth(),),
     );
   }
 }
