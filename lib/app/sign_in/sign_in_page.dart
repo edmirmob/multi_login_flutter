@@ -5,16 +5,15 @@ import 'package:multi_login_flutter/services/auth.dart';
 
 class SignInPage extends StatelessWidget {
   final String title;
-  final Function(UserId) onSignIn;
   final AuthBase auth;
-  const SignInPage({Key key, this.title, @required this.onSignIn, @required this.auth}) : super(key: key);
+  const SignInPage({Key key, this.title, @required this.auth}) : super(key: key);
 
   Future<void> _signInAnonimously() async {
     try {
-      UserId user = await auth.signInAnonimously();
-       onSignIn(user);
+      await auth.signInAnonimously();
     } catch (e) {
       print(e.toString());
+    
       
     }
   }
