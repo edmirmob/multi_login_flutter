@@ -6,15 +6,21 @@ import 'package:multi_login_flutter/services/auth.dart';
 class SignInPage extends StatelessWidget {
   final String title;
   final AuthBase auth;
-  const SignInPage({Key key, this.title, @required this.auth}) : super(key: key);
+  const SignInPage({Key key, this.title, @required this.auth})
+      : super(key: key);
 
   Future<void> _signInAnonimously() async {
     try {
       await auth.signInAnonimously();
     } catch (e) {
       print(e.toString());
-    
-      
+    }
+  }
+  Future<void> _signInWithGoogle() async {
+    try {
+      await auth.signInWithGoogle();
+    } catch (e) {
+      print(e.toString());
     }
   }
 
@@ -51,7 +57,7 @@ class SignInPage extends StatelessWidget {
             text: 'Sign in with Google',
             color: Colors.white,
             textColor: Colors.black87,
-            onPressed: () {},
+            onPressed: _signInWithGoogle,
           ),
           SizedBox(height: 8),
           SocialSignInButton(
