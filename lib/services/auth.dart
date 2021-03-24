@@ -14,6 +14,8 @@ abstract class AuthBase {
   Future<UserId> signInAnonimously();
   Future<void> signOut();
   Future<UserId> signInWithGoogle();
+  Future<UserId> signInWithEmailAndPassword(String email, String password);
+  Future<UserId> createUserWithEmailAndPassword(String email, String password);
   //  Future  signInWithFacebook();
 }
 
@@ -54,6 +56,22 @@ class Auth implements AuthBase {
         message: 'Sign in aborted by user',
       );
     }
+  }
+  @override
+  Future<UserId> signInWithEmailAndPassword(String email, String password)async {
+    final _authResult = await _firebaseAuth.signInWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
+    return _userFromFirebase(_authResult.user);
+  }
+  @override
+   Future<UserId> createUserWithEmailAndPassword(String email, String password)async {
+    final _authResult = await _firebaseAuth.createUserWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
+    return _userFromFirebase(_authResult.user);
   }
 
   // @override
@@ -119,5 +137,4 @@ class Auth implements AuthBase {
     //await facebookLogin.logOut();
     await _firebaseAuth.signOut();
   }
-
 }
