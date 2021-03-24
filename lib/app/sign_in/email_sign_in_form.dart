@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:multi_login_flutter/app/sign_in/validators.dart';
 import 'package:multi_login_flutter/common_widgets/form_submit_button.dart';
+import 'package:multi_login_flutter/common_widgets/platform_alert_dialog.dart';
 import 'package:multi_login_flutter/services/auth.dart';
 
 enum EmailSignInFormType { signIn, register }
@@ -40,7 +43,15 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
       }
       Navigator.of(context).pop();
     } catch (e) {
-      print(e.toString());
+      if (Platform.isIOS) {
+      } else {
+        PlatformAlertDialog(
+          title: 'Sign in failed',
+          content: e.toString(),
+          defaultActionText: 'OK',
+          cancelActionText: 'Cancel',
+        ).show(context);
+      }
     } finally {
       setState(() {
         _isLoading = false;
@@ -114,8 +125,9 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
   }
 
   void _emailEditingComplete() {
-    final newFocus = widget.emailValidator.isValid(_email) ?
-    _passwordFocusNode : _emailFocusNode;
+    final newFocus = widget.emailValidator.isValid(_email)
+        ? _passwordFocusNode
+        : _emailFocusNode;
     FocusScope.of(context).requestFocus(newFocus);
   }
 
