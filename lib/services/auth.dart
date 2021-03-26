@@ -25,6 +25,7 @@ class Auth implements AuthBase {
   UserId _userFromFirebase(User user) {
     if (user == null) {
       return null;
+    
     }
 
     return UserId(uid: user.uid);

@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:multi_login_flutter/common_widgets/platform_alert_dialog.dart';
 import 'package:multi_login_flutter/services/auth.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
-  HomePage({@required this.auth});
 
-  final AuthBase auth;
-
-  Future<void> _signOut() async {
+  Future<void> _signOut(BuildContext context) async {
     try {
+      final auth = Provider.of<AuthBase>(context, listen: false);
       await auth.signOut();
     } catch (e) {
       print(e.toString());
@@ -23,7 +22,7 @@ class HomePage extends StatelessWidget {
       defaultActionText: 'Logout',
     ).show(context);
     if (_didChangedPlatform == true) {
-      _signOut();
+      _signOut(context);
     }
   }
 

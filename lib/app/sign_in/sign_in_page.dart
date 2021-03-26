@@ -3,22 +3,24 @@ import 'package:multi_login_flutter/app/sign_in/email_sign_in_page.dart';
 import 'package:multi_login_flutter/app/sign_in/sign_in_button.dart';
 import 'package:multi_login_flutter/app/sign_in/social_sign_in_button.dart';
 import 'package:multi_login_flutter/services/auth.dart';
+import 'package:provider/provider.dart';
 
 class SignInPage extends StatelessWidget {
   final String title;
-  final AuthBase auth;
-  const SignInPage({Key key, this.title, @required this.auth})
+  const SignInPage({Key key, this.title,})
       : super(key: key);
 
-  Future<void> _signInAnonimously() async {
+  Future<void> _signInAnonimously(BuildContext context) async {
     try {
+      final auth = Provider.of<AuthBase>(context, listen: false);
       await auth.signInAnonimously();
     } catch (e) {
       print(e.toString());
     }
   }
-  Future<void> _signInWithGoogle() async {
+  Future<void> _signInWithGoogle(BuildContext context) async {
     try {
+     final auth = Provider.of<AuthBase>(context, listen: false);
       await auth.signInWithGoogle();
     } catch (e) {
       print(e.toString());
@@ -29,7 +31,7 @@ class SignInPage extends StatelessWidget {
       MaterialPageRoute<void>(
         fullscreenDialog: true,
         builder:(context){
-           return EmailSignInPage(auth: auth,);
+           return EmailSignInPage();
         } )
     );
   }
@@ -67,7 +69,7 @@ class SignInPage extends StatelessWidget {
             text: 'Sign in with Google',
             color: Colors.white,
             textColor: Colors.black87,
-            onPressed: _signInWithGoogle,
+            onPressed: ()=> _signInWithGoogle(context),
           ),
           SizedBox(height: 8),
           SocialSignInButton(
@@ -98,7 +100,7 @@ class SignInPage extends StatelessWidget {
             text: 'Go anonimous',
             color: Colors.lime[300],
             textColor: Colors.black,
-            onPressed: _signInAnonimously,
+            onPressed: ()=>_signInAnonimously(context),
           ),
         ],
       ),
