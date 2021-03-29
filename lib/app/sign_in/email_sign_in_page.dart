@@ -1,27 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:multi_login_flutter/app/sign_in/email_sign_in_form_bloc_based.dart';
+import 'package:multi_login_flutter/app/sign_in/email_sign_in_form.dart';
+import 'package:multi_login_flutter/services/auth.dart';
+import 'package:provider/provider.dart';
 
 class EmailSignInPage extends StatelessWidget {
-  @override
+
+@override
   Widget build(BuildContext context) {
-    // final auth = Provider.of<AuthBase>(context, listen: false);
+    final auth = Provider.of<AuthBase>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         elevation: 2,
-        title: Center(
-            child: Text(
-          'Sign in',
-        )),
+        title: Center(child: Text('Sign in',)),
       ),
       body: SingleChildScrollView(
-        child: Padding(
+              child: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Card(
-            child: EmailSignInFormBlocBased.create(context),
-          ),
+          child: Card(child: EmailSignInForm()),
         ),
       ),
-      backgroundColor: Colors.grey[200],
-    );
-  }
+            backgroundColor: Colors.grey[200],
+          );
+        }
+   
 }
