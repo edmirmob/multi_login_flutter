@@ -4,8 +4,8 @@ import 'package:flutter/foundation.dart';
 import 'package:multi_login_flutter/app/sign_in/email-sign_in_model.dart';
 import 'package:multi_login_flutter/services/auth.dart';
 
-class EmailSignInBloc {
-  EmailSignInBloc({@required this.auth});
+class EmailSignInChangeModel {
+  EmailSignInChangeModel({@required this.auth});
 
   final AuthBase auth;
   StreamController<EmailSignInModel> _modelController =

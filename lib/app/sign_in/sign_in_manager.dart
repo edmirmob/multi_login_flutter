@@ -3,31 +3,32 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:multi_login_flutter/services/auth.dart';
 
-class SignInBloc{
+class SignInManager{
   
-  SignInBloc({@required this.auth});
+  SignInManager({@required this.auth, @required this.isLoading});
 
   final AuthBase auth;
+  final ValueNotifier isLoading;
 
- final StreamController<bool> _isLoadingController = StreamController<bool>();
+//  final StreamController<bool> _isLoadingController = StreamController<bool>();
 
 
-Stream<bool> get isLoadingStream => _isLoadingController.stream;
+// Stream<bool> get isLoadingStream => _isLoadingController.stream;
 
-void dispose(){
-  _isLoadingController.close();
-}
+// void dispose(){
+//   _isLoadingController.close();
+// }
 
-void _setLoading(bool isLoading)=>_isLoadingController.add(isLoading);
+// void _setLoading(bool isLoading)=>_isLoadingController.add(isLoading);
 
 Future<UserId> _signIn(Future<UserId> Function() signInMethod)async{
 try {
-     _setLoading(true);
+     isLoading.value = true;
      return await signInMethod();
    } catch (e) {
      rethrow;
    }finally{
-     _setLoading(false);
+     isLoading.value = false;
    }
 }
 
