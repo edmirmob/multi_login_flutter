@@ -56,19 +56,6 @@ class JobsPage extends StatelessWidget {
     );
   }
 
-  void _createJob(BuildContext context) async {
-    try {
-      final dataBase = Provider.of<DataBase>(context, listen: false);
-      await dataBase.createJob(Job(name: 'Blog', ratePerHour: 27));
-    } catch (e) {
-      PlatformAlertDialog(
-        title: 'Operation failed',
-        content: e.message,
-        defaultActionText: 'OK',
-      ).show(context);
-    }
-  }
-
   Widget _buildContext(BuildContext context) {
     final readProvider = context.read<DataBase>();
 
