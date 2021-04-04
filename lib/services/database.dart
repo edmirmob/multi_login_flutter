@@ -23,9 +23,10 @@ class FirestoreDatabase implements DataBase {
 
   final String uid;
   final _service = FirestoreServis.instance;
+  String documentIdFromCurrentDate() => DateTime.now().toIso8601String();
   @override
   Future<void> createJob(Job job) async => await _service.setData(
-        path: APIPath.job(uid, 'job_abc'),
+        path: APIPath.job(uid, documentIdFromCurrentDate()),
         data: job.toMap(),
       );
   Stream<List<Job>> jobsStream() => _service.collectionStream(

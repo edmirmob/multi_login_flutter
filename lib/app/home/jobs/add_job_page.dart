@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:multi_login_flutter/app/home/models.dart/job.dart';
+import 'package:multi_login_flutter/services/database.dart';
+import 'package:provider/provider.dart';
 
 class AddJobPage extends StatefulWidget {
+  const AddJobPage({Key key, @required this.database}) : super(key: key);
+
+  final DataBase database;
+
   static Future<void> show(BuildContext context) async {
+    final databaseProvider = context.read<DataBase>();
     await Navigator.of(context).push(
       MaterialPageRoute(
-          builder: (context) => AddJobPage(), fullscreenDialog: true),
+          builder: (context) => AddJobPage(database: databaseProvider,), fullscreenDialog: true),
     );
   }
 
@@ -25,9 +33,11 @@ class _AddJobPageState extends State<AddJobPage> {
     return false;
   }
 
-  void _submit() {
+  Future<void> _submit()async {
     if (validateAndSaveForm()) {
-      print('form saved with name:  $_name and rate: $_ratePerHour');
+      final job = Job(name: _name, ratePerHour: _ratePerHour);
+      await widget.database.createJob(job);
+      Navigator.of(context).pop();
     }
   }
 
@@ -76,22 +86,7 @@ class _AddJobPageState extends State<AddJobPage> {
 
   List<Widget> _buildFormChildren() {
     return [
-       Card(
-          color: Colors.blue,
-          child: Row(
-            children: [
-              Icon(Icons.description),
-              SizedBox(width:20.0),
-              Expanded(
-                flex: 30,
-                child: Text('Ovo je nesto sto je puno dugo i siroko i sto ne moze stati'
-                  // Extremely long text,
-                  // style: kAnsTextStyle,
-                ),
-              ),
-            ],
-          ),
-        ),
+      
       TextFormField(
         decoration: InputDecoration(labelText: 'Job name'),
         validator: (value)=>value.isNotEmpty ? null : 'Name can\'t be empty',

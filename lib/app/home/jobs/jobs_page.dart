@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:multi_login_flutter/app/home/jobs/add_job_page.dart';
 import 'package:multi_login_flutter/app/home/models.dart/job.dart';
 import 'package:multi_login_flutter/common_widgets/platform_alert_dialog.dart';
@@ -31,10 +30,8 @@ class JobsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: delete this line
-    //  final readProv = Provider.of<DataBase>(context, listen: false);
-    final cc = context.read<DataBase>();
-    cc.jobsStream();
+    final databaseProvide = context.read<DataBase>();
+    databaseProvide.jobsStream();
     return Scaffold(
       appBar: AppBar(title: Text('Jobs'), actions: [
         TextButton(
@@ -66,11 +63,7 @@ class JobsPage extends StatelessWidget {
         if (snapshot.hasData) {
           final jobs = snapshot.data;
           final childrens = jobs.map((job) => Text(job.name)).toList();
-          return ListView(children:[
-            Center(
-              child: Text(childrens.toString()),
-            )
-          ] );
+          return ListView(children: childrens);
         }
         if (snapshot.hasError) {
           return Center(
