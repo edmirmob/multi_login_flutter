@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:multi_login_flutter/app/home/models.dart/job.dart';
+import 'package:multi_login_flutter/common_widgets/platform_alert_dialog.dart';
 import 'package:multi_login_flutter/services/database.dart';
 import 'package:provider/provider.dart';
 
@@ -35,6 +36,15 @@ class _AddJobPageState extends State<AddJobPage> {
 
   Future<void> _submit()async {
     if (validateAndSaveForm()) {
+      try {
+        
+      } catch (e) {
+        PlatformAlertDialog(
+        title: 'Operation failed',
+        content: e.toString(),
+        defaultActionText: 'OK',
+      ).show(context);
+      }
       final job = Job(name: _name, ratePerHour: _ratePerHour);
       await widget.database.createJob(job);
       Navigator.of(context).pop();
