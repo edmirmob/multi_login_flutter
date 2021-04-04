@@ -13,7 +13,10 @@ class AddJobPage extends StatefulWidget {
     final databaseProvider = context.read<DataBase>();
     await Navigator.of(context).push(
       MaterialPageRoute(
-          builder: (context) => AddJobPage(database: databaseProvider,), fullscreenDialog: true),
+          builder: (context) => AddJobPage(
+                database: databaseProvider,
+              ),
+          fullscreenDialog: true),
     );
   }
 
@@ -34,20 +37,29 @@ class _AddJobPageState extends State<AddJobPage> {
     return false;
   }
 
-  Future<void> _submit()async {
+  Future<void> _submit() async {
     if (validateAndSaveForm()) {
       try {
-        
+        final jobs = await widget.database.jobsStream().first;
+        final allNames = jobs.map((job) => job.name).toList();
+        if (allNames.contains(_name)) {
+          PlatformAlertDialog(
+            title: 'Name already used',
+            content: 'Please choose a diferent job name',
+            defaultActionText: 'OK',
+          ).show(context);
+        }else{
+        final job = Job(name: _name, ratePerHour: _ratePerHour);
+        await widget.database.createJob(job);
+        Navigator.of(context).pop();
+        }
       } catch (e) {
         PlatformAlertDialog(
-        title: 'Operation failed',
-        content: e.toString(),
-        defaultActionText: 'OK',
-      ).show(context);
+          title: 'Operation failed',
+          content: e.toString(),
+          defaultActionText: 'OK',
+        ).show(context);
       }
-      final job = Job(name: _name, ratePerHour: _ratePerHour);
-      await widget.database.createJob(job);
-      Navigator.of(context).pop();
     }
   }
 
@@ -96,15 +108,14 @@ class _AddJobPageState extends State<AddJobPage> {
 
   List<Widget> _buildFormChildren() {
     return [
-      
       TextFormField(
         decoration: InputDecoration(labelText: 'Job name'),
-        validator: (value)=>value.isNotEmpty ? null : 'Name can\'t be empty',
+        validator: (value) => value.isNotEmpty ? null : 'Name can\'t be empty',
         onSaved: (value) => _name = value,
       ),
       TextFormField(
         decoration: InputDecoration(labelText: 'Rate per hour'),
-        onSaved: (value)=>_ratePerHour = int.tryParse(value),
+        onSaved: (value) => _ratePerHour = int.tryParse(value),
         keyboardType: TextInputType.numberWithOptions(),
       ),
     ];
