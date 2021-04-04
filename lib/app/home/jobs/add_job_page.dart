@@ -76,6 +76,22 @@ class _AddJobPageState extends State<AddJobPage> {
 
   List<Widget> _buildFormChildren() {
     return [
+       Card(
+          color: Colors.blue,
+          child: Row(
+            children: [
+              Icon(Icons.description),
+              SizedBox(width:20.0),
+              Expanded(
+                flex: 30,
+                child: Text('Ovo je nesto sto je puno dugo i siroko i sto ne moze stati'
+                  // Extremely long text,
+                  // style: kAnsTextStyle,
+                ),
+              ),
+            ],
+          ),
+        ),
       TextFormField(
         decoration: InputDecoration(labelText: 'Job name'),
         validator: (value)=>value.isNotEmpty ? null : 'Name can\'t be empty',
