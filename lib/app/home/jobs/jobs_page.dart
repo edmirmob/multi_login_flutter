@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:multi_login_flutter/app/home/jobs/add_job_page.dart';
+import 'package:multi_login_flutter/app/home/jobs/job_list_tile.dart';
 import 'package:multi_login_flutter/app/home/models.dart/job.dart';
 import 'package:multi_login_flutter/common_widgets/platform_alert_dialog.dart';
 import 'package:multi_login_flutter/services/auth.dart';
@@ -62,7 +63,14 @@ class JobsPage extends StatelessWidget {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           final jobs = snapshot.data;
-          final childrens = jobs.map((job) => Text(job.name)).toList();
+          final childrens = jobs
+              .map(
+                (job) => JobListTile(
+                  job: job,
+                  onTap: () {},
+                ),
+              )
+              .toList();
           return ListView(children: childrens);
         }
         if (snapshot.hasError) {

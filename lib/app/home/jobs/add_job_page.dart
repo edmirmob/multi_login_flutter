@@ -48,10 +48,10 @@ class _AddJobPageState extends State<AddJobPage> {
             content: 'Please choose a diferent job name',
             defaultActionText: 'OK',
           ).show(context);
-        }else{
-        final job = Job(name: _name, ratePerHour: _ratePerHour);
-        await widget.database.createJob(job);
-        Navigator.of(context).pop();
+        } else {
+          final job = Job(name: _name, ratePerHour: _ratePerHour);
+          await widget.database.createJob(job);
+          Navigator.of(context).pop();
         }
       } catch (e) {
         PlatformAlertDialog(
@@ -115,7 +115,7 @@ class _AddJobPageState extends State<AddJobPage> {
       ),
       TextFormField(
         decoration: InputDecoration(labelText: 'Rate per hour'),
-        onSaved: (value) => _ratePerHour = int.tryParse(value),
+        onSaved: (value) => _ratePerHour = int.tryParse(value) ?? 0,
         keyboardType: TextInputType.numberWithOptions(),
       ),
     ];
