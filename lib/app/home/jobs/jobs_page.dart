@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:multi_login_flutter/app/home/jobs/edit_job_page.dart';
+import 'package:multi_login_flutter/app/home/jobs/empty_content.dart';
 import 'package:multi_login_flutter/app/home/jobs/job_list_tile.dart';
 import 'package:multi_login_flutter/app/home/models.dart/job.dart';
 import 'package:multi_login_flutter/common_widgets/platform_alert_dialog.dart';
@@ -46,7 +47,7 @@ class JobsPage extends StatelessWidget {
           ),
         ),
       ]),
-      body: _buildContext(context),
+      body: _buildContents(context),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () => EditJobPage.show(context),
@@ -54,7 +55,7 @@ class JobsPage extends StatelessWidget {
     );
   }
 
-  Widget _buildContext(BuildContext context) {
+  Widget _buildContents(BuildContext context) {
     final readProvider = context.read<DataBase>();
 
     // ignore: missing_required_param
@@ -63,6 +64,7 @@ class JobsPage extends StatelessWidget {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           final jobs = snapshot.data;
+          if(jobs.isNotEmpty){
           final childrens = jobs
               .map(
                 (job) => JobListTile(
@@ -73,6 +75,8 @@ class JobsPage extends StatelessWidget {
               .toList();
           return ListView(children: childrens);
         }
+        return EmptyContent();
+      }
         if (snapshot.hasError) {
           return Center(
             child: Text('Some error occured'),
