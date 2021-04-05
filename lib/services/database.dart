@@ -6,7 +6,7 @@ import 'package:multi_login_flutter/services/firestore_servis.dart';
 
 abstract class DataBase {
   // Future<void> setJob(Job job);
-  Future<void> createJob(Job job);
+  Future<void> setJob(Job job);
   // Future<void> deleteJob(Job job);
 
   // Future<void> setEntry(Entry job);
@@ -18,15 +18,16 @@ abstract class DataBase {
   // Stream<List<Enty>> entriesStream({Job job});
 }
 
+String documentIdFromCurrentDate() => DateTime.now().toIso8601String();
+
 class FirestoreDatabase implements DataBase {
   FirestoreDatabase({@required this.uid}) : assert(uid != null);
 
   final String uid;
   final _service = FirestoreServis.instance;
-  String documentIdFromCurrentDate() => DateTime.now().toIso8601String();
   @override
-  Future<void> createJob(Job job) async => await _service.setData(
-        path: APIPath.job(uid, documentIdFromCurrentDate()),
+  Future<void> setJob(Job job) async => await _service.setData(
+        path: APIPath.job(uid, job.id),
         data: job.toMap(),
       );
   Stream<List<Job>> jobsStream() => _service.collectionStream(
