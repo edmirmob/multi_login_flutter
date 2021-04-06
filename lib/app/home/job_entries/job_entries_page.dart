@@ -21,7 +21,7 @@ class JobEntriesPage extends StatelessWidget {
   final Job job;
 
   static Future<void> show(BuildContext context, Job job) async {
-    final DataBase database = Provider.of<DataBase>(context);
+    final database = Provider.of<DataBase>(context, listen: false);
     await Navigator.of(context).push(
       MaterialPageRoute(
         fullscreenDialog: false,
@@ -62,7 +62,7 @@ class JobEntriesPage extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () =>
-            EntryPage(database: database, job: job)show(context: context, database: database, job: job),
+            EntryPage.show(context: context, database: database, job: job),
       ),
     );
   }
