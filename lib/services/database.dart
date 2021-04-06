@@ -7,7 +7,7 @@ import 'package:multi_login_flutter/services/firestore_servis.dart';
 abstract class DataBase {
   // Future<void> setJob(Job job);
   Future<void> setJob(Job job);
-  // Future<void> deleteJob(Job job);
+  Future<void> deleteJob(Job job);
 
   // Future<void> setEntry(Entry job);
 
@@ -30,10 +30,14 @@ class FirestoreDatabase implements DataBase {
         path: APIPath.job(uid, job.id),
         data: job.toMap(),
       );
+  @override
+  Future<void> deleteJob(Job job) async => await _service.deleteData(
+        path: APIPath.job(uid, job.id),
+      );
+  @override
   Stream<List<Job>> jobsStream() => _service.collectionStream(
       path: APIPath.jobs(uid),
-      builder: (data,documentId) {
+      builder: (data, documentId) {
         return Job.fromMap(data, documentId);
       });
-
 }
