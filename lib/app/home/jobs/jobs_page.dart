@@ -31,6 +31,20 @@ class JobsPage extends StatelessWidget {
     }
   }
 
+   Future<void>_delete(BuildContext context, Job job)async {
+     try {
+     final database = context.read<DataBase>();
+     await database.deleteJob(job);
+       
+     } catch (e) {
+       PlatformAlertDialog(
+          title: 'Operation failed',
+          content: e.toString(),
+          defaultActionText: 'OK',
+        ).show(context);
+     }
+     
+}
   @override
   Widget build(BuildContext context) {
     final databaseProvide = context.read<DataBase>();
@@ -65,12 +79,19 @@ class JobsPage extends StatelessWidget {
       builder: (context, snapshot) {
         return ListItemsBuilder<Job>(
           snapshot: snapshot,
-          itemBuilder: (context, job) => JobListTile(
-            job: job,
-            onTap: () => EditJobPage.show(context, job: job),
-          ),
-        );
-      },
-    );
-  }
-}
+          itemBuilder: (context, job) => Dismissible(
+            key: Key('job-${job.id}'),
+            background: Container(color:Colors.red),
+            direction: DismissDirection.endToStart,
+            onDismissed: (direction)=>_delete(context,job),
+                                  child: JobListTile(
+                          job: job,
+                          onTap: () => EditJobPage.show(context, job: job),
+                        ),
+                      ),
+                    );
+                  },
+                );
+              }
+            }
+            
