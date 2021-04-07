@@ -14,7 +14,6 @@ import 'package:multi_login_flutter/services/database.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
 
-
 class JobEntriesPage extends StatelessWidget {
   const JobEntriesPage({@required this.database, @required this.job});
   final DataBase database;
@@ -54,7 +53,11 @@ class JobEntriesPage extends StatelessWidget {
               'Edit',
               style: TextStyle(fontSize: 18.0, color: Colors.white),
             ),
-            onPressed: () => EditJobPage.show(context, job: job),
+            onPressed: () => EditJobPage.show(
+              context,
+              job: job,
+              database: database,
+            ),
           ),
         ],
       ),

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:multi_login_flutter/app/home/models.dart/job.dart';
 import 'package:multi_login_flutter/common_widgets/platform_alert_dialog.dart';
 import 'package:multi_login_flutter/services/database.dart';
-import 'package:provider/provider.dart';
 
 class EditJobPage extends StatefulWidget {
   const EditJobPage({Key key, @required this.database, this.job})
@@ -11,12 +10,11 @@ class EditJobPage extends StatefulWidget {
   final DataBase database;
   final Job job;
 
-  static Future<void> show(BuildContext context, {Job job}) async {
-    final databaseProvider = context.read<DataBase>();
+  static Future<void> show(BuildContext context, {Job job, DataBase database}) async {
     await Navigator.of(context).push(
       MaterialPageRoute(
           builder: (context) => EditJobPage(
-                database: databaseProvider,
+                database: database,
                 job: job,
               ),
           fullscreenDialog: true),
