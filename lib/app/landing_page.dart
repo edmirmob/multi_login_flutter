@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:multi_login_flutter/app/home/home_page.dart';
 import 'package:multi_login_flutter/app/home/jobs/jobs_page.dart';
 import 'package:multi_login_flutter/app/sign_in/sign_in_page.dart';
 import 'package:multi_login_flutter/services/auth.dart';
@@ -19,7 +20,7 @@ class LandingPage extends StatelessWidget {
             }
             return Provider<DataBase>(
               create: (_) => FirestoreDatabase(uid: user.uid),
-              child: JobsPage());
+              child: HomePage());
           } else {
             return Scaffold(
               body: Center(
