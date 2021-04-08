@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:multi_login_flutter/app/home/home_page.dart';
 import 'package:multi_login_flutter/app/home/tab_item.dart';
 
 class CupertinoHomeScafold extends StatelessWidget {
@@ -7,9 +8,11 @@ class CupertinoHomeScafold extends StatelessWidget {
     Key key,
     @required this.currentTab,
     @required this.onSelectTab,
+    @required this.widgetBuilders,
   }) : super(key: key);
   final TabItem currentTab;
   final ValueChanged<TabItem> onSelectTab;
+  final Map<TabItem, WidgetBuilder> widgetBuilders;
 
   @override
   Widget build(BuildContext context) {
@@ -25,10 +28,10 @@ class CupertinoHomeScafold extends StatelessWidget {
         ),
       ),
       tabBuilder: (context, index) {
+        final item = TabItem.values[index];
         return CupertinoTabView(
-        builder: (context){
-          return Container();
-        },
+          builder: (context)=> widgetBuilders[item](context),
+ 
         );
       },
     );
