@@ -1,0 +1,1 @@
+enum TabItem {jobs, entries,accounts }
