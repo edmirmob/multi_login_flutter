@@ -46,10 +46,17 @@ class JobsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final databaseProvide = context.read<DataBase>();
+    final databaseProvide = Provider.of<DataBase>(context, listen: false);
     databaseProvide.jobsStream();
     return Scaffold(
       appBar: AppBar(title: Text('Jobs'), actions: [
+        IconButton(
+          onPressed: () => EditJobPage.show(
+            context,
+            database: Provider.of<DataBase>(context, listen: false),
+          ),
+          icon: Icon(Icons.add),
+        ),
         TextButton(
           onPressed: () => _confirmSignOut(context),
           child: Text(
@@ -62,18 +69,11 @@ class JobsPage extends StatelessWidget {
         ),
       ]),
       body: _buildContents(context),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () => EditJobPage.show(
-          context,
-          database: Provider.of<DataBase>(context, listen: false),
-        ),
-      ),
     );
   }
 
   Widget _buildContents(BuildContext context) {
-    final readProvider = context.read<DataBase>();
+    final readProvider = Provider.of<DataBase>(context, listen: false);
 
     return StreamBuilder<List<Job>>(
       stream: readProvider.jobsStream(),
