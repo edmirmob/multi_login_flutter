@@ -75,7 +75,6 @@ class JobsPage extends StatelessWidget {
   Widget _buildContents(BuildContext context) {
     final readProvider = context.read<DataBase>();
 
-    // ignore: missing_required_param
     return StreamBuilder<List<Job>>(
       stream: readProvider.jobsStream(),
       builder: (context, snapshot) {
