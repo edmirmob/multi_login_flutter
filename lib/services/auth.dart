@@ -4,8 +4,14 @@ import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class UserId {
-  UserId({@required this.uid});
+  UserId({
+    @required this.uid,
+    @required this.photoUrl,
+    @required this.displayName,
+  });
   final String uid;
+  final String photoUrl;
+  final String displayName;
 }
 
 abstract class AuthBase {
@@ -25,10 +31,13 @@ class Auth implements AuthBase {
   UserId _userFromFirebase(User user) {
     if (user == null) {
       return null;
-    
     }
 
-    return UserId(uid: user.uid);
+    return UserId(
+      uid: user.uid,
+      displayName: user.displayName,
+      photoUrl: user.photoURL,
+    );
   }
 
   @override
@@ -58,16 +67,20 @@ class Auth implements AuthBase {
       );
     }
   }
+
   @override
-  Future<UserId> signInWithEmailAndPassword(String email, String password)async {
+  Future<UserId> signInWithEmailAndPassword(
+      String email, String password) async {
     final _authResult = await _firebaseAuth.signInWithEmailAndPassword(
       email: email,
       password: password,
     );
     return _userFromFirebase(_authResult.user);
   }
+
   @override
-   Future<UserId> createUserWithEmailAndPassword(String email, String password)async {
+  Future<UserId> createUserWithEmailAndPassword(
+      String email, String password) async {
     final _authResult = await _firebaseAuth.createUserWithEmailAndPassword(
       email: email,
       password: password,

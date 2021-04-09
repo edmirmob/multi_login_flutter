@@ -27,6 +27,8 @@ class AccountPage extends StatelessWidget {
   }
   @override
   Widget build(BuildContext context) {
+    //provider of user
+    final user = context.read<UserId>();
     return Scaffold(
       appBar: AppBar(title: Text('Account'), actions: [
        
