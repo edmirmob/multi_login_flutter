@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:multi_login_flutter/common_widgets/avatar.dart';
 import 'package:multi_login_flutter/common_widgets/platform_alert_dialog.dart';
 import 'package:multi_login_flutter/services/auth.dart';
 import 'package:provider/provider.dart';
 
 class AccountPage extends StatelessWidget {
-
-    Future<void> _signOut(BuildContext context) async {
+  Future<void> _signOut(BuildContext context) async {
     try {
       final auth = Provider.of<AuthBase>(context, listen: false);
       await auth.signOut();
@@ -25,24 +25,36 @@ class AccountPage extends StatelessWidget {
       _signOut(context);
     }
   }
+
   @override
   Widget build(BuildContext context) {
     //provider of user
     final user = context.read<UserId>();
     return Scaffold(
-      appBar: AppBar(title: Text('Account'), actions: [
-       
-        TextButton(
-          onPressed: () => _confirmSignOut(context),
-          child: Text(
-            'Logout',
-            style: TextStyle(
-              fontSize: 18,
-              color: Colors.white,
+      appBar: AppBar(
+        title: Text('Account'),
+        actions: [
+          TextButton(
+            onPressed: () => _confirmSignOut(context),
+            child: Text(
+              'Logout',
+              style: TextStyle(
+                fontSize: 18,
+                color: Colors.white,
+              ),
             ),
           ),
-        ),
-      ]),
+        ],
+        bottom: PreferredSize(
+            child: _buildUserInfo(user), preferredSize: Size.fromHeight(130)),
+      ),
+    );
+  }
+
+  Widget _buildUserInfo(UserId user) {
+    return Avatar(
+      photoUrl: user.photoUrl,
+      radius: 50,
     );
   }
 }
