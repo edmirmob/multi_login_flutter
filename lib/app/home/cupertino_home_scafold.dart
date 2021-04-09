@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:multi_login_flutter/app/home/home_page.dart';
 import 'package:multi_login_flutter/app/home/tab_item.dart';
 
 class CupertinoHomeScafold extends StatelessWidget {
