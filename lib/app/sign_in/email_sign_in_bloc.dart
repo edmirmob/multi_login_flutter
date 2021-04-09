@@ -3,21 +3,22 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:multi_login_flutter/app/sign_in/email-sign_in_model.dart';
 import 'package:multi_login_flutter/services/auth.dart';
+import 'package:rxdart/rxdart.dart';
 
-class EmailSignInChangeModel {
-  EmailSignInChangeModel({@required this.auth});
+class EmailSignInBloc {
+  EmailSignInBloc({@required this.auth});
 
   final AuthBase auth;
-  StreamController<EmailSignInModel> _modelController =
-      StreamController<EmailSignInModel>();
+  final _modelSubject = BehaviorSubject<EmailSignInModel>.seeded(EmailSignInModel());
+  
 
-  Stream<EmailSignInModel> get modelStream => _modelController.stream;
+  Stream<EmailSignInModel> get modelStream => _modelSubject.stream;
 
   void dispose() {
-    _modelController.close();
+    _modelSubject.close();
   }
 
-  EmailSignInModel _model = EmailSignInModel();
+  EmailSignInModel get _model => _modelSubject.value;
 
   void updateWith({
     String email,
@@ -26,15 +27,13 @@ class EmailSignInChangeModel {
     bool isLoading,
     bool submitted,
   }) {
-    _model = _model.copyWith(
+    _modelSubject.add(_model.copyWith(
       email: email,
       password: password,
       formType: formType,
       isLoading: isLoading,
       submitted: submitted,
-    );
-
-    _modelController.add(_model);
+    ),);
   }
 
   void toggleFormType() {

@@ -9,13 +9,13 @@ import 'package:provider/provider.dart';
 
 class EmailSignInFormBlocBased extends StatefulWidget {
   EmailSignInFormBlocBased({@required this.bloc});
-  final EmailSignInChangeModel bloc;
+  final EmailSignInBloc bloc;
 
   static Widget create(BuildContext context) {
     final AuthBase auth = Provider.of<AuthBase>(context);
-    return Provider<EmailSignInChangeModel>(
-      create: (context) => EmailSignInChangeModel(auth: auth),
-      child: Consumer<EmailSignInChangeModel>(
+    return Provider<EmailSignInBloc>(
+      create: (context) => EmailSignInBloc(auth: auth),
+      child: Consumer<EmailSignInBloc>(
         builder: (context, bloc, _) => EmailSignInFormBlocBased(bloc: bloc),
       ),
       dispose: (context, bloc) => bloc.dispose(),
