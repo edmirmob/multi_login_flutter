@@ -52,9 +52,19 @@ class AccountPage extends StatelessWidget {
   }
 
   Widget _buildUserInfo(UserId user) {
-    return Avatar(
-      photoUrl: user.photoUrl,
-      radius: 50,
+    return Column(
+      children: [
+        Avatar(
+          photoUrl: user.photoUrl,
+          radius: 50,
+        ),
+        SizedBox(height: 8),
+          Text(
+           user.displayName != null ? user.displayName : 'No name!!!',
+            style: TextStyle(color: Colors.white),
+          ),
+        SizedBox(height: 8),
+      ],
     );
   }
 }
