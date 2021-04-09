@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:multi_login_flutter/app/home/entries/entries_bloc.dart';
+import 'package:multi_login_flutter/app/home/entries/entries_list_tile.dart';
+import 'package:multi_login_flutter/app/home/jobs/list_items_builder.dart';
+import 'package:multi_login_flutter/services/database.dart';
 import 'package:provider/provider.dart';
-import 'package:time_tracker_flutter_course/app/home/entries/entries_bloc.dart';
-import 'package:time_tracker_flutter_course/app/home/entries/entries_list_tile.dart';
-import 'package:time_tracker_flutter_course/app/home/jobs/list_items_builder.dart';
-import 'package:time_tracker_flutter_course/services/database.dart';
+
 
 class EntriesPage extends StatelessWidget {
   static Widget create(BuildContext context) {
-    final database = Provider.of<Database>(context);
+    final database = Provider.of<DataBase>(context);
     return Provider<EntriesBloc>(
-      builder: (_) => EntriesBloc(database: database),
+      create: (_) => EntriesBloc(database: database),
       child: EntriesPage(),
     );
   }

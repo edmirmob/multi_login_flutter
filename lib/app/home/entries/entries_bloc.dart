@@ -1,19 +1,20 @@
 import 'package:flutter/foundation.dart';
+import 'package:multi_login_flutter/app/home/entries/daily_jobs_details.dart';
+import 'package:multi_login_flutter/app/home/entries/entries_list_tile.dart';
+import 'package:multi_login_flutter/app/home/entries/entry_job.dart';
+import 'package:multi_login_flutter/app/home/job_entries/format.dart';
+import 'package:multi_login_flutter/app/home/models.dart/entry.dart';
+import 'package:multi_login_flutter/app/home/models.dart/job.dart';
+import 'package:multi_login_flutter/services/database.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:time_tracker_flutter_course/app/home/entries/daily_jobs_details.dart';
-import 'package:time_tracker_flutter_course/app/home/entries/entries_list_tile.dart';
-import 'package:time_tracker_flutter_course/app/home/entries/entry_job.dart';
-import 'package:time_tracker_flutter_course/app/home/job_entries/format.dart';
-import 'package:time_tracker_flutter_course/app/home/models/entry.dart';
-import 'package:time_tracker_flutter_course/app/home/models/job.dart';
-import 'package:time_tracker_flutter_course/services/database.dart';
+
 
 class EntriesBloc {
   EntriesBloc({@required this.database});
-  final Database database;
+  final DataBase database;
 
   /// combine List<Job>, List<Entry> into List<EntryJob>
-  Stream<List<EntryJob>> get _allEntriesStream => Observable.combineLatest2(
+  Stream<List<EntryJob>> get _allEntriesStream => Rx.combineLatest2(
         database.entriesStream(),
         database.jobsStream(),
         _entriesJobsCombiner,
