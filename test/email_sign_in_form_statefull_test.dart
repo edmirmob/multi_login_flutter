@@ -1,5 +1,3 @@
-import 'dart:js';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
@@ -24,4 +22,16 @@ void main() {
       )),
     ));
   }
+    testWidgets(
+        'WHEN user does\'t enter the email and password,'
+        'AND user taps on the sign-in button,'
+        'THEN signInWithEmailAndPassword is not called',
+        (WidgetTester tester) async {
+      await pumpEmailSignInForm(tester);
+
+      final signInButton = find.text('Sign in');
+      await tester.tap(signInButton);
+
+      verifyNever(mockAuth.signInWithEmailAndPassword(any, any));
+    });
 }
