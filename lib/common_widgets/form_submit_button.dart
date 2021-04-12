@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:multi_login_flutter/common_widgets/custom_raised_button.dart';
+import 'package:multi_login_flutter/common_widgets/custom_elevated_button.dart';
 
-class FormSubmitButton extends CustomRaisedButton {
+class FormSubmitButton extends CustomElevatedButton {
   FormSubmitButton({
     @required String text,
     VoidCallback onPressed,
