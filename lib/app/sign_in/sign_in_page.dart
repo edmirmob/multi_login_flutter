@@ -14,6 +14,7 @@ class SignInPage extends StatelessWidget {
 
   final SignInManager manager;
   final bool isLoading;
+  static const Key emailPasswordKey = Key('email-password');
 
   static Widget create(BuildContext context) {
     final authBase = Provider.of<AuthBase>(context, listen: false);
@@ -107,6 +108,7 @@ class SignInPage extends StatelessWidget {
           ),
           SizedBox(height: 8),
           SignInButton(
+            key: emailPasswordKey,
             text: 'Sign in with email',
             color: Colors.teal[700],
             textColor: Colors.white,

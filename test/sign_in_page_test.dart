@@ -13,7 +13,7 @@ void main() {
     mockAuth = MockAuth();
   });
 
-  Future<void> pumpLandingPage(
+  Future<void> pumpSignInPage(
     WidgetTester tester,
   ) async {
     await tester.pumpWidget(
@@ -26,6 +26,9 @@ void main() {
         ),
       ),
     );
-    await tester.pump();
   }
+
+  testWidgets('email & password navigation', (WidgetTester tester) async {
+    await pumpSignInPage(tester);
+  });
 }
