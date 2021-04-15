@@ -6,7 +6,7 @@ import 'package:multi_login_flutter/app/sign_in/email_sign_in_form_statefull.dar
 import 'package:multi_login_flutter/services/auth.dart';
 import 'package:provider/provider.dart';
 
-class MockAuth extends Mock implements AuthBase {}
+import 'mocks.dart';
 
 void main() {
   MockAuth mockAuth;
@@ -85,7 +85,7 @@ void main() {
       verify(mockAuth.signInWithEmailAndPassword(email, password)).called(1);
       expect(signedIn, true);
     });
-        testWidgets(
+    testWidgets(
         'WHEN user enters an invalid email and password'
         'AND user taps on the sign-in button'
         'THEN signInWithEmailAndPassword is called'

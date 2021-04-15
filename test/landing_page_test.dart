@@ -8,7 +8,7 @@ import 'package:multi_login_flutter/app/sign_in/sign_in_page.dart';
 import 'package:multi_login_flutter/services/auth.dart';
 import 'package:provider/provider.dart';
 
-class MockAuth extends Mock implements AuthBase {}
+import 'mocks.dart';
 
 void main() {
   MockAuth mockAuth;
@@ -60,7 +60,7 @@ void main() {
   });
 
   testWidgets('non-null user', (WidgetTester tester) async {
-    stubOnAuthStateChangedYields([UserId(uid: '123456')]);
+    stubOnAuthStateChangedYields([UserId(uid: '123')]);
 
     await pumpLandingPage(tester);
 
